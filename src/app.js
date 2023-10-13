@@ -1,5 +1,4 @@
 const express = require('express');
-const cors = require('cors')();
 
 const newObj = {
   "head": ["priorità", "type", "number", "data", "room", "stato"],
@@ -34,22 +33,29 @@ io.on('connection', async (socket) => {
   //aggiungere id tabelloni
   socket.on('type', (e) => {
     if (e !== 'totem') {
-      user.push(socket.id)
+      user.push({ 'user': socket.id, 'tab': newObj })
 
       io.emit('user', user)
     }
   })
 
+  console.log("user: ", user);
+
   //popup
   socket.on('sendpopup', (msg) => {
-    console.log(msg);
+    console.log("PopUp: ", msg);
     io.emit('popup', {
       awaitTime: 4000,
       data: msg
 
     });
-  });
 
+
+  });
+  //invio tab selezionato
+  socket.on('takeSelectedtab', (t) => {
+    socket.emit('sendSelecetedTab', user[user.findIndex((e) => e.user === t.user)])
+  })
 
   //lista
   socket.emit('Messagio', newObj)
@@ -57,16 +63,18 @@ io.on('connection', async (socket) => {
   //config
   socket.emit('configurazioni', config)
 
+  socket.on("newMsg", ({ head, body, selectedTab }) => {
+    console.log(user)
+    user[user.findIndex((e) => e.user === selectedTab)].tab = { head, body }
+    io.to(selectedTab).emit('Messagio', { head, body })
+  })
+
   socket.on('disconnect', () => {
     console.log('user disconnected ' + socket.id);
-    user.splice(user.indexOf(socket.id), 1)
+    user.splice(user.findIndex((e) => e.user === socket.id), 1)
     io.emit('user', user)
     console.log(user)
   });
-
-  socket.on("newMsg", (msg) => {
-    io.to(msg.selectedTab).emit('Messagio', msg)
-  })
 });
 
 http.listen(3000, () => {
