@@ -1,4 +1,5 @@
 const express = require('express');
+const PORT = process.env.PORT || 3000;
 
 const newObj = {
   "head": ["priorità", "type", "number", "data", "room", "stato"],
@@ -21,6 +22,11 @@ const io = require('socket.io')(http, {
     origin: '*'
   }
 });
+
+app.get('/', (req, res) => {
+  res.write(`<h1>Socket IO start on ${PORT}</h1>`)
+  res.end()
+})
 
 
 let user = []
@@ -77,6 +83,6 @@ io.on('connection', async (socket) => {
   });
 });
 
-http.listen(3000, () => {
+http.listen(PORT, () => {
   console.log('listening on *:3000');
 });
