@@ -2,7 +2,7 @@ const express = require('express');
 
 const serverless = require('serverless-http')
 
-const PORT = process.env.PORT || 3000;
+const PORT = process.env.PORT;
 
 const newObj = {
   "head": ["priorità", "type", "number", "data", "room", "stato"],
