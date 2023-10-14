@@ -1,4 +1,7 @@
 const express = require('express');
+
+const serverless = require('serverless-http')
+
 const PORT = process.env.PORT || 3000;
 
 const newObj = {
@@ -86,3 +89,6 @@ io.on('connection', async (socket) => {
 http.listen(PORT, () => {
   console.log('listening on *:3000');
 });
+
+app.use('/', router)
+module.exports.handler = serverless(app);
