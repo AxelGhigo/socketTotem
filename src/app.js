@@ -1,6 +1,5 @@
 const express = require('express');
-
-const serverless = require('serverless-http')
+const cors = require('cors');
 
 const PORT = process.env.PORT || 3000;
 
@@ -25,6 +24,8 @@ const io = require('socket.io')(http, {
     origin: '*'
   }
 });
+
+app.use(cors());
 
 app.get('/', (req, res) => {
   res.write(`<h1>Socket IO start on ${PORT}</h1>`)
