@@ -89,6 +89,3 @@ io.on('connection', async (socket) => {
 http.listen(PORT, () => {
   console.log('listening on *:3000');
 });
-
-app.use('/', router)
-module.exports.handler = serverless(app);
