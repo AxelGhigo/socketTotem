@@ -26,8 +26,6 @@ const io = require('socket.io')(http, {
   }
 });
 
-app.use(cors());
-
 app.get('/', (req, res) => {
   res.write(`<h1>Socket IO start on ${PORT}</h1>`)
   res.end()
