@@ -12,10 +12,6 @@ const newObj = {
   [{ "value": "media" }, "", { "value": "NP005", "color": "", "class": "standard" }, { "value": "9 ago 17:15" }, { "value": "Piano terra" }, { "value": "Chiamato", "class": "blink " }]]
 }
 
-const config = {
-  numCollum: 3
-}
-
 
 const app = express();
 const http = require('http').createServer(app);
@@ -68,8 +64,6 @@ io.on('connection', async (socket) => {
   //lista
   socket.emit('Messagio', newObj)
 
-  //config
-  socket.emit('configurazioni', config)
 
   socket.on("newMsg", ({ head, body, selectedTab }) => {
     console.log(user)
