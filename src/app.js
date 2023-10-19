@@ -15,7 +15,6 @@ const newObj = {
 
 const app = express();
 
-app.use(cors());
 
 const http = require('http').createServer(app);
 const io = require('socket.io')(http, {
