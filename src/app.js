@@ -14,6 +14,16 @@ const newObj = {
 
 
 const app = express();
+
+
+
+app.use((req, res, next) => {
+  res.setHeader("Access-Control-Allow-Origin", "*");
+  res.setHeader("Access-Control-Allow-Methods", "POST, GET, PUT");
+  res.setHeader("Access-Control-Allow-Headers", "Content-Type");
+  next();
+})
+
 const http = require('http').createServer(app);
 const io = require('socket.io')(http, {
   cors: {
@@ -79,12 +89,7 @@ io.on('connection', async (socket) => {
   });
 });
 
-app.use((req, res, next) => {
-  res.setHeader("Access-Control-Allow-Origin", "*");
-  res.setHeader("Access-Control-Allow-Methods", "POST, GET, PUT");
-  res.setHeader("Access-Control-Allow-Headers", "Content-Type");
-  next();
-})
+
 
 http.listen(PORT, () => {
   console.log('listening on *:3000');
