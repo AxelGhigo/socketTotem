@@ -14,12 +14,10 @@ const newObj = {
 
 
 const app = express();
-
-
 const http = require('http').createServer(app);
 const io = require('socket.io')(http, {
   cors: {
-    origin: ["*"]
+    origin: ["https://corso-angular-f932b.web.app"]
   }
 });
 
@@ -80,8 +78,6 @@ io.on('connection', async (socket) => {
     console.log(user)
   });
 });
-
-
 
 http.listen(PORT, () => {
   console.log('listening on *:3000');
