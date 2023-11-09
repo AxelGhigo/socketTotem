@@ -58,7 +58,7 @@ io.on('connection', async (socket) => {
   socket.on("newMsg", ({ head, body, selectedTab }) => {
     console.log(user)
 
-    if(length(user)){
+    if(user.length){
     user[user.findIndex((e) => e.user === selectedTab)].tab = { head, body }
     io.to(selectedTab).emit('Messagio', { head, body })
     }
